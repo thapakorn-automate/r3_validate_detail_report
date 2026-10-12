@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.5 (Python 3.14.6 on win32)" generated="2026-10-12T18:03:52.767551" rpa="false" schemaversion="5">
+<suite id="s1" name="Excel Filter" source="D:\RobotFrameworkProject\report_detail_normal\Tests\excel_filter.robot">
+<test id="s1-t1" name="Combine Detail Files Against Master" line="12">
+<kw name="Run Excel Filter Automation" owner="excel_filter_keyword">
+<kw name="Get Input File Count" owner="ExcelFilter">
+<msg time="2026-10-12T18:03:53.533573" level="INFO">${input_count} = 67</msg>
+<var>${input_count}</var>
+<arg>${round_name}</arg>
+<status status="PASS" start="2026-10-12T18:03:53.531108" elapsed="0.002554"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${input_count} &gt; 0</arg>
+<arg>No Excel files found for ${round_name}</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2026-10-12T18:03:53.534269" elapsed="0.000826"/>
+</kw>
+<kw name="Process All Excel Files" owner="ExcelFilter">
+<msg time="2026-10-12T18:04:13.025578" level="INFO">Selected Round : Round12
+Input folder   : D:\RobotFrameworkProject\report_detail_normal\input\Round12
+Excel files    : 67
+Output file    : D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx
+Export completed: D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx
+Selected Round: Round12
+Input folder: D:\RobotFrameworkProject\report_detail_normal\input\Round12
+Output file: D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx
+Master count: 55
+Detail file count: 66</msg>
+<msg time="2026-10-12T18:04:13.025763" level="INFO">C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openpyxl\styles\stylesheet.py:237: UserWarning: Workbook contains no default style, apply openpyxl's default
+  warn("Workbook contains no default style, apply openpyxl's default")</msg>
+<msg time="2026-10-12T18:04:13.026238" level="INFO">${output_file} = D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx</msg>
+<var>${output_file}</var>
+<arg>${round_name}</arg>
+<doc>Process Excel files only in input/&lt;Round&gt;.
+Output: output/&lt;Round&gt;_Combined_Filtered.xlsx</doc>
+<status status="PASS" start="2026-10-12T18:03:53.535334" elapsed="19.490992"/>
+</kw>
+<kw name="Verify Output Files Exist" owner="ExcelFilter">
+<arg>${round_name}</arg>
+<status status="PASS" start="2026-10-12T18:04:13.026587" elapsed="0.000408"/>
+</kw>
+<return>
+<value>${output_file}</value>
+<status status="PASS" start="2026-10-12T18:04:13.027084" elapsed="0.000084"/>
+</return>
+<arg>${ROUND_NAME}</arg>
+<status status="PASS" start="2026-10-12T18:03:53.530315" elapsed="19.497023"/>
+</kw>
+<kw name="Validate Exported Excel Exists" owner="excel_filter_keyword">
+<kw name="Verify Output Files Exist" owner="ExcelFilter">
+<arg>${round_name}</arg>
+<status status="PASS" start="2026-10-12T18:04:13.028356" elapsed="0.000459"/>
+</kw>
+<arg>${ROUND_NAME}</arg>
+<status status="PASS" start="2026-10-12T18:04:13.027834" elapsed="0.001143"/>
+</kw>
+<kw name="Validate Excel Comparison Results" owner="excel_filter_keyword">
+<kw name="Validate Excel Comparison Results" owner="ExcelFilter">
+<status status="PASS" start="2026-10-12T18:04:13.030256" elapsed="1.717750"/>
+</kw>
+<status status="PASS" start="2026-10-12T18:04:13.029634" elapsed="1.718523"/>
+</kw>
+<doc>Combine and validate Master/Detail Excel files.</doc>
+<status status="PASS" start="2026-10-12T18:03:53.528905" elapsed="21.219793"/>
+</test>
+<status status="PASS" start="2026-10-12T18:03:52.771488" elapsed="21.978238"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Excel Filter" id="s1" pass="1" fail="0" skip="0">Excel Filter</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
