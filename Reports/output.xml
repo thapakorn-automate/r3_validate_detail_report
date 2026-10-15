@@ -1,78 +1,1538 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.5 (Python 3.14.6 on win32)" generated="2026-10-12T18:03:52.767551" rpa="false" schemaversion="5">
+<robot generator="Robot 7.5 (Python 3.14.6 on win32)" generated="2026-10-14T16:29:19.638886" rpa="false" schemaversion="5">
 <suite id="s1" name="Excel Filter" source="D:\RobotFrameworkProject\report_detail_normal\Tests\excel_filter.robot">
-<test id="s1-t1" name="Combine Detail Files Against Master" line="12">
-<kw name="Run Excel Filter Automation" owner="excel_filter_keyword">
+<kw name="Get Round From Keyboard" owner="excel_filter_keyword" type="SETUP">
+<kw name="Get Value From User" owner="Dialogs">
+<msg time="2026-10-14T16:29:28.178494" level="INFO">${round_name} = Round12</msg>
+<var>${round_name}</var>
+<arg>Enter Round name (for example, Round12):</arg>
+<doc>Pauses execution and asks user to input a value.</doc>
+<status status="PASS" start="2026-10-14T16:29:20.476133" elapsed="7.702461"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-10-14T16:29:28.179357" level="INFO">${round_name} = Round12</msg>
+<var>${round_name}</var>
+<arg>${round_name}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-10-14T16:29:28.178928" elapsed="0.000507"/>
+</kw>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<msg time="2026-10-14T16:29:28.180606" level="INFO">Length is 7.</msg>
+<arg>${round_name}</arg>
+<arg>Round name must not be empty.</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="PASS" start="2026-10-14T16:29:28.179660" elapsed="0.001057"/>
+</kw>
+<kw name="Validate Round Input Folder" owner="ExcelFilter">
+<arg>${round_name}</arg>
+<status status="PASS" start="2026-10-14T16:29:28.180951" elapsed="0.000876"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-10-14T16:29:28.183153" level="INFO">${ROUND} = Round12</msg>
+<arg>\${ROUND}</arg>
+<arg>${round_name}</arg>
+<doc>Makes the variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-10-14T16:29:28.182305" elapsed="0.000959"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Selected Round: ${round_name}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:29:28.183547" elapsed="0.000770"/>
+</kw>
+<status status="PASS" start="2026-10-14T16:29:20.474638" elapsed="7.709872"/>
+</kw>
+<test id="s1-t1" name="TC01 Validation round for Migration" line="16">
+<kw name="Validate migration round" owner="excel_filter_keyword">
+<kw name="Validate Round Input Folder" owner="ExcelFilter">
+<msg time="2026-10-14T16:29:28.188059" level="INFO">${input_dir} = D:\RobotFrameworkProject\report_detail_normal\input\Round12</msg>
+<var>${input_dir}</var>
+<arg>${round_name}</arg>
+<status status="PASS" start="2026-10-14T16:29:28.187276" elapsed="0.000866"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${EMPTY}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:29:28.188469" elapsed="0.001099"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Selected Round: ${round_name}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:29:28.189965" elapsed="0.000945"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Input folder: ${input_dir}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:29:28.191358" elapsed="0.000793"/>
+</kw>
+<status status="PASS" start="2026-10-14T16:29:28.186514" elapsed="0.005817"/>
+</kw>
+<status status="PASS" start="2026-10-14T16:29:28.184673" elapsed="0.008188"/>
+</test>
+<test id="s1-t2" name="TC02 Validation total files Input" line="18">
+<kw name="Validate total files Input" owner="excel_filter_keyword">
 <kw name="Get Input File Count" owner="ExcelFilter">
-<msg time="2026-10-12T18:03:53.533573" level="INFO">${input_count} = 67</msg>
+<msg time="2026-10-14T16:29:28.203154" level="INFO">${input_count} = 67</msg>
 <var>${input_count}</var>
 <arg>${round_name}</arg>
-<status status="PASS" start="2026-10-12T18:03:53.531108" elapsed="0.002554"/>
+<status status="PASS" start="2026-10-14T16:29:28.195948" elapsed="0.007301"/>
 </kw>
 <kw name="Should Be True" owner="BuiltIn">
 <arg>${input_count} &gt; 0</arg>
 <arg>No Excel files found for ${round_name}</arg>
 <doc>Fails if the given condition is not true.</doc>
-<status status="PASS" start="2026-10-12T18:03:53.534269" elapsed="0.000826"/>
+<status status="PASS" start="2026-10-14T16:29:28.203571" elapsed="0.000876"/>
 </kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${EMPTY}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:29:28.204753" elapsed="0.000825"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Input file count: ${input_count} Files</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:29:28.205999" elapsed="0.000958"/>
+</kw>
+<status status="PASS" start="2026-10-14T16:29:28.195173" elapsed="0.011961"/>
+</kw>
+<status status="PASS" start="2026-10-14T16:29:28.194042" elapsed="0.013584"/>
+</test>
+<test id="s1-t3" name="TC03 Validation Path for Input and Output" line="20">
+<kw name="Prepare Export For Round" owner="excel_filter_keyword" type="SETUP">
 <kw name="Process All Excel Files" owner="ExcelFilter">
-<msg time="2026-10-12T18:04:13.025578" level="INFO">Selected Round : Round12
+<msg time="2026-10-14T16:29:43.791653" level="INFO">Selected Round : Round12
 Input folder   : D:\RobotFrameworkProject\report_detail_normal\input\Round12
 Excel files    : 67
 Output file    : D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx
-Export completed: D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx
-Selected Round: Round12
-Input folder: D:\RobotFrameworkProject\report_detail_normal\input\Round12
-Output file: D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx
-Master count: 55
-Detail file count: 66</msg>
-<msg time="2026-10-12T18:04:13.025763" level="INFO">C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openpyxl\styles\stylesheet.py:237: UserWarning: Workbook contains no default style, apply openpyxl's default
+Export completed: D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx</msg>
+<msg time="2026-10-14T16:29:43.791788" level="INFO">C:\Users\User\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openpyxl\styles\stylesheet.py:237: UserWarning: Workbook contains no default style, apply openpyxl's default
   warn("Workbook contains no default style, apply openpyxl's default")</msg>
-<msg time="2026-10-12T18:04:13.026238" level="INFO">${output_file} = D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx</msg>
-<var>${output_file}</var>
 <arg>${round_name}</arg>
 <doc>Process Excel files only in input/&lt;Round&gt;.
 Output: output/&lt;Round&gt;_Combined_Filtered.xlsx</doc>
-<status status="PASS" start="2026-10-12T18:03:53.535334" elapsed="19.490992"/>
+<status status="PASS" start="2026-10-14T16:29:28.209900" elapsed="15.582271"/>
 </kw>
-<kw name="Verify Output Files Exist" owner="ExcelFilter">
+<arg>${ROUND}</arg>
+<status status="PASS" start="2026-10-14T16:29:28.209365" elapsed="15.583007"/>
+</kw>
+<kw name="Validate Path for Input and Output" owner="excel_filter_keyword">
+<kw name="Get Last Export Summary" owner="ExcelFilter">
+<msg time="2026-10-14T16:29:43.794740" level="INFO">${summary} = {'round_name': 'Round12', 'input_dir': 'D:\\RobotFrameworkProject\\report_detail_normal\\input\\Round12', 'output_file': 'D:\\RobotFrameworkProject\\report_detail_normal\\output\\Round12_Combined_Filt...</msg>
+<var>${summary}</var>
+<status status="PASS" start="2026-10-14T16:29:43.793595" elapsed="0.001217"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${EMPTY}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:29:43.795085" elapsed="0.000807"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Input folder: ${summary}[input_dir]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:29:43.796254" elapsed="0.000969"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Output file: ${summary}[output_file]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:29:43.797616" elapsed="0.000853"/>
+</kw>
+<status status="PASS" start="2026-10-14T16:29:43.793081" elapsed="0.005557"/>
+</kw>
+<status status="PASS" start="2026-10-14T16:29:28.208588" elapsed="15.590503"/>
+</test>
+<test id="s1-t4" name="TC04 Validation Files name of Master" line="23">
+<kw name="Prepare Export For Round" owner="excel_filter_keyword" type="SETUP">
+<kw name="Process All Excel Files" owner="ExcelFilter">
+<msg time="2026-10-14T16:29:59.648038" level="INFO">Selected Round : Round12
+Input folder   : D:\RobotFrameworkProject\report_detail_normal\input\Round12
+Excel files    : 67
+Output file    : D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx
+Export completed: D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx</msg>
 <arg>${round_name}</arg>
-<status status="PASS" start="2026-10-12T18:04:13.026587" elapsed="0.000408"/>
+<doc>Process Excel files only in input/&lt;Round&gt;.
+Output: output/&lt;Round&gt;_Combined_Filtered.xlsx</doc>
+<status status="PASS" start="2026-10-14T16:29:43.801738" elapsed="15.846444"/>
 </kw>
-<return>
-<value>${output_file}</value>
-<status status="PASS" start="2026-10-12T18:04:13.027084" elapsed="0.000084"/>
-</return>
-<arg>${ROUND_NAME}</arg>
-<status status="PASS" start="2026-10-12T18:03:53.530315" elapsed="19.497023"/>
+<arg>${ROUND}</arg>
+<status status="PASS" start="2026-10-14T16:29:43.801061" elapsed="15.847309"/>
+</kw>
+<kw name="Validate Files name of Master" owner="excel_filter_keyword">
+<kw name="Get Last Export Summary" owner="ExcelFilter">
+<msg time="2026-10-14T16:29:59.650551" level="INFO">${summary} = {'round_name': 'Round12', 'input_dir': 'D:\\RobotFrameworkProject\\report_detail_normal\\input\\Round12', 'output_file': 'D:\\RobotFrameworkProject\\report_detail_normal\\output\\Round12_Combined_Filt...</msg>
+<var>${summary}</var>
+<status status="PASS" start="2026-10-14T16:29:59.649494" elapsed="0.001113"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${EMPTY}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:29:59.650821" elapsed="0.001026"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Master count (${summary}[master_name]): ${summary}[master_count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:29:59.652118" elapsed="0.000680"/>
+</kw>
+<status status="PASS" start="2026-10-14T16:29:59.649006" elapsed="0.003917"/>
+</kw>
+<status status="PASS" start="2026-10-14T16:29:43.800119" elapsed="15.853121"/>
+</test>
+<test id="s1-t5" name="TC05 Validation Files name of Detail" line="26">
+<kw name="Prepare Export For Round" owner="excel_filter_keyword" type="SETUP">
+<kw name="Process All Excel Files" owner="ExcelFilter">
+<msg time="2026-10-14T16:30:15.346521" level="INFO">Selected Round : Round12
+Input folder   : D:\RobotFrameworkProject\report_detail_normal\input\Round12
+Excel files    : 67
+Output file    : D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx
+Export completed: D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx</msg>
+<arg>${round_name}</arg>
+<doc>Process Excel files only in input/&lt;Round&gt;.
+Output: output/&lt;Round&gt;_Combined_Filtered.xlsx</doc>
+<status status="PASS" start="2026-10-14T16:29:59.655892" elapsed="15.690783"/>
+</kw>
+<arg>${ROUND}</arg>
+<status status="PASS" start="2026-10-14T16:29:59.655127" elapsed="15.691690"/>
+</kw>
+<kw name="Validate Files name of Detail" owner="excel_filter_keyword">
+<kw name="Get Last Export Summary" owner="ExcelFilter">
+<msg time="2026-10-14T16:30:15.349551" level="INFO">${summary} = {'round_name': 'Round12', 'input_dir': 'D:\\RobotFrameworkProject\\report_detail_normal\\input\\Round12', 'output_file': 'D:\\RobotFrameworkProject\\report_detail_normal\\output\\Round12_Combined_Filt...</msg>
+<var>${summary}</var>
+<status status="PASS" start="2026-10-14T16:30:15.348354" elapsed="0.001250"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${EMPTY}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.349814" elapsed="0.000715"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.351385" elapsed="0.000933"/>
+</kw>
+<var name="${detail}">{'name': '14_470_994', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.351097" elapsed="0.001305"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.352787" elapsed="0.000635"/>
+</kw>
+<var name="${detail}">{'name': '14_470_999', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.352594" elapsed="0.000915"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.353934" elapsed="0.000761"/>
+</kw>
+<var name="${detail}">{'name': '14_470_99H', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.353719" elapsed="0.001072"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.355257" elapsed="0.001018"/>
+</kw>
+<var name="${detail}">{'name': '14_473_350', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.355018" elapsed="0.001383"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.357081" elapsed="0.001001"/>
+</kw>
+<var name="${detail}">{'name': '14_473_351', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.356676" elapsed="0.001517"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.358630" elapsed="0.000933"/>
+</kw>
+<var name="${detail}">{'name': '14_473_355', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.358405" elapsed="0.001317"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.360227" elapsed="0.000825"/>
+</kw>
+<var name="${detail}">{'name': '14_473_356', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.359975" elapsed="0.001183"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.361571" elapsed="0.000748"/>
+</kw>
+<var name="${detail}">{'name': '14_473_995', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.361357" elapsed="0.001083"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.363001" elapsed="0.000844"/>
+</kw>
+<var name="${detail}">{'name': '14_473_999', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.362713" elapsed="0.001282"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.364501" elapsed="0.001116"/>
+</kw>
+<var name="${detail}">{'name': '14_473_99U', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.364248" elapsed="0.001569"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.366607" elapsed="0.001351"/>
+</kw>
+<var name="${detail}">{'name': '14_478_310', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.366230" elapsed="0.001923"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.368902" elapsed="0.001041"/>
+</kw>
+<var name="${detail}">{'name': '14_478_311', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.368557" elapsed="0.001559"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.370708" elapsed="0.000907"/>
+</kw>
+<var name="${detail}">{'name': '14_478_312', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.370456" elapsed="0.001326"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.372285" elapsed="0.000952"/>
+</kw>
+<var name="${detail}">{'name': '14_478_313', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.372042" elapsed="0.001360"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.374133" elapsed="0.001111"/>
+</kw>
+<var name="${detail}">{'name': '14_478_314', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.373749" elapsed="0.001634"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.375913" elapsed="0.000895"/>
+</kw>
+<var name="${detail}">{'name': '14_478_315', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.375637" elapsed="0.001308"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.377466" elapsed="0.000948"/>
+</kw>
+<var name="${detail}">{'name': '14_478_316', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.377193" elapsed="0.001352"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.379008" elapsed="0.000680"/>
+</kw>
+<var name="${detail}">{'name': '14_478_317', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.378781" elapsed="0.000982"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.380114" elapsed="0.000635"/>
+</kw>
+<var name="${detail}">{'name': '14_478_31A', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.379928" elapsed="0.000904"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.381190" elapsed="0.000566"/>
+</kw>
+<var name="${detail}">{'name': '14_478_31B', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.380996" elapsed="0.000828"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.382123" elapsed="0.000541"/>
+</kw>
+<var name="${detail}">{'name': '14_478_31E', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.381959" elapsed="0.000784"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.383115" elapsed="0.000601"/>
+</kw>
+<var name="${detail}">{'name': '14_478_31F', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.382915" elapsed="0.000870"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.384091" elapsed="0.000513"/>
+</kw>
+<var name="${detail}">{'name': '14_478_31H', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.383924" elapsed="0.000743"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.384966" elapsed="0.000502"/>
+</kw>
+<var name="${detail}">{'name': '14_478_31T', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.384803" elapsed="0.000728"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.385823" elapsed="0.000507"/>
+</kw>
+<var name="${detail}">{'name': '14_478_3L0', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.385665" elapsed="0.000731"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.386688" elapsed="0.000552"/>
+</kw>
+<var name="${detail}">{'name': '14_478_3L1', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.386529" elapsed="0.000800"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.387700" elapsed="0.000712"/>
+</kw>
+<var name="${detail}">{'name': '14_478_999', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.387502" elapsed="0.000982"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.388814" elapsed="0.000524"/>
+</kw>
+<var name="${detail}">{'name': '14_478_99S', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.388637" elapsed="0.000766"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.389707" elapsed="0.001192"/>
+</kw>
+<var name="${detail}">{'name': '14_497_7T0', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.389540" elapsed="0.001574"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.391946" elapsed="0.001100"/>
+</kw>
+<var name="${detail}">{'name': '14_497_7T1', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.391510" elapsed="0.001650"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.393804" elapsed="0.001167"/>
+</kw>
+<var name="${detail}">{'name': '14_497_7T5', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.393423" elapsed="0.001661"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.395513" elapsed="0.000804"/>
+</kw>
+<var name="${detail}">{'name': '14_497_7T6', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.395297" elapsed="0.001137"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.396859" elapsed="0.000736"/>
+</kw>
+<var name="${detail}">{'name': '14_497_7T7', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.396645" elapsed="0.001054"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.398098" elapsed="0.000725"/>
+</kw>
+<var name="${detail}">{'name': '14_497_7T8', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.397891" elapsed="0.001091"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.399364" elapsed="0.000692"/>
+</kw>
+<var name="${detail}">{'name': '14_497_7TA', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.399166" elapsed="0.000998"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.400648" elapsed="0.000818"/>
+</kw>
+<var name="${detail}">{'name': '14_497_7TB', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.400403" elapsed="0.001174"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.402011" elapsed="0.000840"/>
+</kw>
+<var name="${detail}">{'name': '14_497_7TC', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.401797" elapsed="0.001171"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.403395" elapsed="0.000730"/>
+</kw>
+<var name="${detail}">{'name': '14_497_7TD', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.403184" elapsed="0.001049"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.404651" elapsed="0.000707"/>
+</kw>
+<var name="${detail}">{'name': '14_497_7TG', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.404442" elapsed="0.001009"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.405813" elapsed="0.000621"/>
+</kw>
+<var name="${detail}">{'name': '14_497_7TH', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.405622" elapsed="0.000894"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.406969" elapsed="0.001166"/>
+</kw>
+<var name="${detail}">{'name': '14_497_7TI', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.406708" elapsed="0.001550"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.408716" elapsed="0.000878"/>
+</kw>
+<var name="${detail}">{'name': '14_497_7TS', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.408484" elapsed="0.001251"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.410271" elapsed="0.000932"/>
+</kw>
+<var name="${detail}">{'name': '14_497_7TT', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.410003" elapsed="0.001337"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.411819" elapsed="0.000746"/>
+</kw>
+<var name="${detail}">{'name': '14_497_7TU', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.411568" elapsed="0.001091"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.413073" elapsed="0.000881"/>
+</kw>
+<var name="${detail}">{'name': '14_497_7TV', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.412845" elapsed="0.001233"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.414548" elapsed="0.000802"/>
+</kw>
+<var name="${detail}">{'name': '14_497_970', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.414313" elapsed="0.001152"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.415892" elapsed="0.000792"/>
+</kw>
+<var name="${detail}">{'name': '14_497_971', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.415678" elapsed="0.001145"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.417271" elapsed="0.000772"/>
+</kw>
+<var name="${detail}">{'name': '14_497_972', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.417050" elapsed="0.001097"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.418559" elapsed="0.000672"/>
+</kw>
+<var name="${detail}">{'name': '14_497_975', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.418354" elapsed="0.000965"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.419706" elapsed="0.000751"/>
+</kw>
+<var name="${detail}">{'name': '14_497_97A', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.419497" elapsed="0.001066"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.420966" elapsed="0.000645"/>
+</kw>
+<var name="${detail}">{'name': '14_497_97B', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.420757" elapsed="0.000934"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.422049" elapsed="0.000598"/>
+</kw>
+<var name="${detail}">{'name': '14_497_97C', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.421858" elapsed="0.000871"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.423112" elapsed="0.000780"/>
+</kw>
+<var name="${detail}">{'name': '14_497_97D', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.422908" elapsed="0.001115"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.424491" elapsed="0.000904"/>
+</kw>
+<var name="${detail}">{'name': '14_497_97E', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.424252" elapsed="0.001269"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.426033" elapsed="0.000833"/>
+</kw>
+<var name="${detail}">{'name': '14_497_97F', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.425809" elapsed="0.001208"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.427662" elapsed="0.000729"/>
+</kw>
+<var name="${detail}">{'name': '14_497_97G', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.427443" elapsed="0.001073"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.429006" elapsed="0.000597"/>
+</kw>
+<var name="${detail}">{'name': '14_497_97H', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.428753" elapsed="0.000931"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.430030" elapsed="0.000572"/>
+</kw>
+<var name="${detail}">{'name': '14_497_97J', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.429842" elapsed="0.000837"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.431030" elapsed="0.000629"/>
+</kw>
+<var name="${detail}">{'name': '14_497_97S', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.430830" elapsed="0.000947"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.432215" elapsed="0.000720"/>
+</kw>
+<var name="${detail}">{'name': '14_497_97T', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.432011" elapsed="0.001026"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.433423" elapsed="0.000610"/>
+</kw>
+<var name="${detail}">{'name': '14_497_97U', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.433217" elapsed="0.000892"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.434453" elapsed="0.000584"/>
+</kw>
+<var name="${detail}">{'name': '14_497_999', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.434264" elapsed="0.000850"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.435454" elapsed="0.000587"/>
+</kw>
+<var name="${detail}">{'name': '14_499_7J0', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.435270" elapsed="0.000853"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.436469" elapsed="0.000585"/>
+</kw>
+<var name="${detail}">{'name': '14__314', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.436282" elapsed="0.000851"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.437474" elapsed="0.001257"/>
+</kw>
+<var name="${detail}">{'name': '14__350', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.437290" elapsed="0.001527"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail count (${detail}[name]): ${detail}[count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.439194" elapsed="0.000939"/>
+</kw>
+<var name="${detail}">{'name': '14__999', 'count': 55}</var>
+<status status="PASS" start="2026-10-14T16:30:15.438987" elapsed="0.001330"/>
+</iter>
+<var>${detail}</var>
+<value>@{summary}[detail_counts]</value>
+<status status="PASS" start="2026-10-14T16:30:15.350709" elapsed="0.089712"/>
+</for>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Detail file count: ${summary}[detail_file_count]</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:15.440918" elapsed="0.001004"/>
+</kw>
+<status status="PASS" start="2026-10-14T16:30:15.347703" elapsed="0.094421"/>
+</kw>
+<status status="PASS" start="2026-10-14T16:29:59.654063" elapsed="15.788471"/>
+</test>
+<test id="s1-t6" name="TC06 Validation Exported Excel Exists" line="29">
+<kw name="Prepare Export For Round" owner="excel_filter_keyword" type="SETUP">
+<kw name="Process All Excel Files" owner="ExcelFilter">
+<msg time="2026-10-14T16:30:31.262131" level="INFO">Selected Round : Round12
+Input folder   : D:\RobotFrameworkProject\report_detail_normal\input\Round12
+Excel files    : 67
+Output file    : D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx
+Export completed: D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx</msg>
+<arg>${round_name}</arg>
+<doc>Process Excel files only in input/&lt;Round&gt;.
+Output: output/&lt;Round&gt;_Combined_Filtered.xlsx</doc>
+<status status="PASS" start="2026-10-14T16:30:15.444819" elapsed="15.817463"/>
+</kw>
+<arg>${ROUND}</arg>
+<status status="PASS" start="2026-10-14T16:30:15.444265" elapsed="15.818164"/>
 </kw>
 <kw name="Validate Exported Excel Exists" owner="excel_filter_keyword">
 <kw name="Verify Output Files Exist" owner="ExcelFilter">
 <arg>${round_name}</arg>
-<status status="PASS" start="2026-10-12T18:04:13.028356" elapsed="0.000459"/>
+<status status="PASS" start="2026-10-14T16:30:31.263616" elapsed="0.000526"/>
 </kw>
-<arg>${ROUND_NAME}</arg>
-<status status="PASS" start="2026-10-12T18:04:13.027834" elapsed="0.001143"/>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${EMPTY}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:31.264434" elapsed="0.000700"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Exported Excel file exists</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:31.265396" elapsed="0.000594"/>
+</kw>
+<status status="PASS" start="2026-10-14T16:30:31.263098" elapsed="0.003024"/>
+</kw>
+<status status="PASS" start="2026-10-14T16:30:15.443481" elapsed="15.822955"/>
+</test>
+<test id="s1-t7" name="TC07 Validation Excel Comparison Results" line="32">
+<kw name="Prepare Export For Round" owner="excel_filter_keyword" type="SETUP">
+<kw name="Process All Excel Files" owner="ExcelFilter">
+<msg time="2026-10-14T16:30:47.164414" level="INFO">Selected Round : Round12
+Input folder   : D:\RobotFrameworkProject\report_detail_normal\input\Round12
+Excel files    : 67
+Output file    : D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx
+Export completed: D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx</msg>
+<arg>${round_name}</arg>
+<doc>Process Excel files only in input/&lt;Round&gt;.
+Output: output/&lt;Round&gt;_Combined_Filtered.xlsx</doc>
+<status status="PASS" start="2026-10-14T16:30:31.268762" elapsed="15.895824"/>
+</kw>
+<arg>${ROUND}</arg>
+<status status="PASS" start="2026-10-14T16:30:31.268211" elapsed="15.896534"/>
 </kw>
 <kw name="Validate Excel Comparison Results" owner="excel_filter_keyword">
 <kw name="Validate Excel Comparison Results" owner="ExcelFilter">
-<status status="PASS" start="2026-10-12T18:04:13.030256" elapsed="1.717750"/>
+<status status="PASS" start="2026-10-14T16:30:47.166129" elapsed="0.709493"/>
 </kw>
-<status status="PASS" start="2026-10-12T18:04:13.029634" elapsed="1.718523"/>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${EMPTY}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:47.875947" elapsed="0.001085"/>
 </kw>
-<doc>Combine and validate Master/Detail Excel files.</doc>
-<status status="PASS" start="2026-10-12T18:03:53.528905" elapsed="21.219793"/>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Excel comparison results validated</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:30:47.877489" elapsed="0.000816"/>
+</kw>
+<status status="PASS" start="2026-10-14T16:30:47.165607" elapsed="0.712846"/>
+</kw>
+<status status="PASS" start="2026-10-14T16:30:31.267421" elapsed="16.611498"/>
 </test>
-<status status="PASS" start="2026-10-12T18:03:52.771488" elapsed="21.978238"/>
+<test id="s1-t8" name="TC08 Validation Field Names With Not Match Result" line="35">
+<kw name="Prepare Export For Round" owner="excel_filter_keyword" type="SETUP">
+<kw name="Process All Excel Files" owner="ExcelFilter">
+<msg time="2026-10-14T16:31:03.766756" level="INFO">Selected Round : Round12
+Input folder   : D:\RobotFrameworkProject\report_detail_normal\input\Round12
+Excel files    : 67
+Output file    : D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx
+Export completed: D:\RobotFrameworkProject\report_detail_normal\output\Round12_Combined_Filtered.xlsx</msg>
+<arg>${round_name}</arg>
+<doc>Process Excel files only in input/&lt;Round&gt;.
+Output: output/&lt;Round&gt;_Combined_Filtered.xlsx</doc>
+<status status="PASS" start="2026-10-14T16:30:47.881185" elapsed="15.885725"/>
+</kw>
+<arg>${ROUND}</arg>
+<status status="PASS" start="2026-10-14T16:30:47.880628" elapsed="15.886453"/>
+</kw>
+<kw name="Validate Field Name Counts By Master And Detail" owner="excel_filter_keyword">
+<kw name="Get Last Field Name Counts" owner="ExcelFilter">
+<msg time="2026-10-14T16:31:11.787860" level="INFO">${file_counts} = [{'type': 'Master', 'name': '14_999_999', 'count': 156}, {'type': 'Detail', 'name': '14_470_994', 'count': 11}, {'type': 'Detail', 'name': '14_470_999', 'count': 22}, {'type': 'Detail', 'name': '14_47...</msg>
+<var>${file_counts}</var>
+<status status="PASS" start="2026-10-14T16:31:03.768288" elapsed="8.019650"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${EMPTY}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.788228" elapsed="0.000944"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Unique Field names with Result = Not match:</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.789498" elapsed="0.000797"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.791057" elapsed="0.000827"/>
+</kw>
+<var name="${file_count}">{'type': 'Master', 'name': '14_999_999', 'count': 156}</var>
+<status status="PASS" start="2026-10-14T16:31:11.790836" elapsed="0.001160"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.792434" elapsed="0.000834"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_470_994', 'count': 11}</var>
+<status status="PASS" start="2026-10-14T16:31:11.792217" elapsed="0.001167"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.793813" elapsed="0.000768"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_470_999', 'count': 22}</var>
+<status status="PASS" start="2026-10-14T16:31:11.793587" elapsed="0.001089"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.795068" elapsed="0.000800"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_470_99H', 'count': 22}</var>
+<status status="PASS" start="2026-10-14T16:31:11.794860" elapsed="0.001123"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.796400" elapsed="0.000758"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_473_350', 'count': 32}</var>
+<status status="PASS" start="2026-10-14T16:31:11.796186" elapsed="0.001071"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.797747" elapsed="0.001046"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_473_351', 'count': 9}</var>
+<status status="PASS" start="2026-10-14T16:31:11.797453" elapsed="0.001443"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.799302" elapsed="0.000740"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_473_355', 'count': 11}</var>
+<status status="PASS" start="2026-10-14T16:31:11.799088" elapsed="0.001052"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.800568" elapsed="0.000733"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_473_356', 'count': 10}</var>
+<status status="PASS" start="2026-10-14T16:31:11.800351" elapsed="0.001045"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.801782" elapsed="0.000704"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_473_995', 'count': 28}</var>
+<status status="PASS" start="2026-10-14T16:31:11.801582" elapsed="0.000997"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.802954" elapsed="0.000659"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_473_999', 'count': 51}</var>
+<status status="PASS" start="2026-10-14T16:31:11.802755" elapsed="0.000945"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.804077" elapsed="0.000665"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_473_99U', 'count': 40}</var>
+<status status="PASS" start="2026-10-14T16:31:11.803882" elapsed="0.000945"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.805242" elapsed="0.001013"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_310', 'count': 95}</var>
+<status status="PASS" start="2026-10-14T16:31:11.805008" elapsed="0.001421"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.807086" elapsed="0.000920"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_311', 'count': 22}</var>
+<status status="PASS" start="2026-10-14T16:31:11.806746" elapsed="0.001446"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.808688" elapsed="0.000979"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_312', 'count': 9}</var>
+<status status="PASS" start="2026-10-14T16:31:11.808428" elapsed="0.001369"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.810269" elapsed="0.000850"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_313', 'count': 11}</var>
+<status status="PASS" start="2026-10-14T16:31:11.810026" elapsed="0.001205"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.811646" elapsed="0.000685"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_314', 'count': 39}</var>
+<status status="PASS" start="2026-10-14T16:31:11.811439" elapsed="0.000968"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.812791" elapsed="0.000611"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_315', 'count': 9}</var>
+<status status="PASS" start="2026-10-14T16:31:11.812572" elapsed="0.000907"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.813831" elapsed="0.000705"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_316', 'count': 33}</var>
+<status status="PASS" start="2026-10-14T16:31:11.813639" elapsed="0.000990"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.814997" elapsed="0.000704"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_317', 'count': 10}</var>
+<status status="PASS" start="2026-10-14T16:31:11.814803" elapsed="0.000981"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.816151" elapsed="0.000813"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_31A', 'count': 6}</var>
+<status status="PASS" start="2026-10-14T16:31:11.815949" elapsed="0.001168"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.817663" elapsed="0.000801"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_31B', 'count': 29}</var>
+<status status="PASS" start="2026-10-14T16:31:11.817443" elapsed="0.001119"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.818962" elapsed="0.000653"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_31E', 'count': 49}</var>
+<status status="PASS" start="2026-10-14T16:31:11.818756" elapsed="0.000933"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.820048" elapsed="0.000664"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_31F', 'count': 10}</var>
+<status status="PASS" start="2026-10-14T16:31:11.819858" elapsed="0.000928"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.821140" elapsed="0.000765"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_31H', 'count': 9}</var>
+<status status="PASS" start="2026-10-14T16:31:11.820951" elapsed="0.001125"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.822714" elapsed="0.001058"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_31T', 'count': 18}</var>
+<status status="PASS" start="2026-10-14T16:31:11.822407" elapsed="0.001489"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.824383" elapsed="0.000880"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_3L0', 'count': 6}</var>
+<status status="PASS" start="2026-10-14T16:31:11.824148" elapsed="0.001244"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.825851" elapsed="0.000813"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_3L1', 'count': 16}</var>
+<status status="PASS" start="2026-10-14T16:31:11.825623" elapsed="0.001155"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.827215" elapsed="0.000704"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_999', 'count': 104}</var>
+<status status="PASS" start="2026-10-14T16:31:11.827003" elapsed="0.000994"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.828389" elapsed="0.000610"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_478_99S', 'count': 23}</var>
+<status status="PASS" start="2026-10-14T16:31:11.828170" elapsed="0.000901"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.829412" elapsed="0.000768"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_7T0', 'count': 34}</var>
+<status status="PASS" start="2026-10-14T16:31:11.829225" elapsed="0.001061"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.830725" elapsed="0.000746"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_7T1', 'count': 14}</var>
+<status status="PASS" start="2026-10-14T16:31:11.830503" elapsed="0.001108"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.832052" elapsed="0.000667"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_7T5', 'count': 16}</var>
+<status status="PASS" start="2026-10-14T16:31:11.831809" elapsed="0.000985"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.833144" elapsed="0.000591"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_7T6', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.832956" elapsed="0.000845"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.834161" elapsed="0.000573"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_7T7', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.833979" elapsed="0.000827"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.835150" elapsed="0.000666"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_7T8', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.834965" elapsed="0.000958"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.836321" elapsed="0.000685"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_7TA', 'count': 19}</var>
+<status status="PASS" start="2026-10-14T16:31:11.836113" elapsed="0.000979"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.837466" elapsed="0.000612"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_7TB', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.837274" elapsed="0.000876"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.838509" elapsed="0.000896"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_7TC', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.838310" elapsed="0.001359"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.840285" elapsed="0.000773"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_7TD', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.840010" elapsed="0.001157"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.841572" elapsed="0.000665"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_7TG', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.841361" elapsed="0.000952"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.842670" elapsed="0.000616"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_7TH', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.842485" elapsed="0.000875"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.843710" elapsed="0.000631"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_7TI', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.843522" elapsed="0.000891"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.844772" elapsed="0.000785"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_7TS', 'count': 15}</var>
+<status status="PASS" start="2026-10-14T16:31:11.844582" elapsed="0.001075"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.846019" elapsed="0.000602"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_7TT', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.845830" elapsed="0.000862"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.847036" elapsed="0.000710"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_7TU', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.846851" elapsed="0.000991"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.848255" elapsed="0.000704"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_7TV', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.848042" elapsed="0.001001"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.849448" elapsed="0.000668"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_970', 'count': 77}</var>
+<status status="PASS" start="2026-10-14T16:31:11.849238" elapsed="0.000959"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.850571" elapsed="0.000609"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_971', 'count': 13}</var>
+<status status="PASS" start="2026-10-14T16:31:11.850373" elapsed="0.000896"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.851610" elapsed="0.000587"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_972', 'count': 23}</var>
+<status status="PASS" start="2026-10-14T16:31:11.851418" elapsed="0.000851"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.852653" elapsed="0.000590"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_975', 'count': 53}</var>
+<status status="PASS" start="2026-10-14T16:31:11.852466" elapsed="0.000843"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.853629" elapsed="0.000642"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_97A', 'count': 40}</var>
+<status status="PASS" start="2026-10-14T16:31:11.853456" elapsed="0.000894"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.854727" elapsed="0.000800"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_97B', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.854529" elapsed="0.001142"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.856175" elapsed="0.000803"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_97C', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.855931" elapsed="0.001142"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.857518" elapsed="0.000745"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_97D', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.857308" elapsed="0.001056"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.858757" elapsed="0.000680"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_97E', 'count': 7}</var>
+<status status="PASS" start="2026-10-14T16:31:11.858553" elapsed="0.000958"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.859903" elapsed="0.000797"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_97F', 'count': 44}</var>
+<status status="PASS" start="2026-10-14T16:31:11.859706" elapsed="0.001104"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.861260" elapsed="0.000774"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_97G', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.861034" elapsed="0.001106"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.862576" elapsed="0.000804"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_97H', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.862358" elapsed="0.001120"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.863894" elapsed="0.000670"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_97J', 'count': 28}</var>
+<status status="PASS" start="2026-10-14T16:31:11.863682" elapsed="0.000954"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.864988" elapsed="0.000616"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_97S', 'count': 20}</var>
+<status status="PASS" start="2026-10-14T16:31:11.864803" elapsed="0.000870"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.866003" elapsed="0.000572"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_97T', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.865828" elapsed="0.000816"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.866986" elapsed="0.000700"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_97U', 'count': 12}</var>
+<status status="PASS" start="2026-10-14T16:31:11.866799" elapsed="0.000976"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.868178" elapsed="0.000635"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_497_999', 'count': 92}</var>
+<status status="PASS" start="2026-10-14T16:31:11.867973" elapsed="0.000909"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.869246" elapsed="0.000570"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14_499_7J0', 'count': 13}</var>
+<status status="PASS" start="2026-10-14T16:31:11.869042" elapsed="0.000842"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.870214" elapsed="0.000566"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14__314', 'count': 4}</var>
+<status status="PASS" start="2026-10-14T16:31:11.870037" elapsed="0.000806"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.871192" elapsed="0.000664"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14__350', 'count': 4}</var>
+<status status="PASS" start="2026-10-14T16:31:11.870995" elapsed="0.000986"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${file_count}[type] (${file_count}[name]): ${file_count}[count] Field names</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-10-14T16:31:11.872473" elapsed="0.001279"/>
+</kw>
+<var name="${file_count}">{'type': 'Detail', 'name': '14__999', 'count': 4}</var>
+<status status="PASS" start="2026-10-14T16:31:11.872216" elapsed="0.001670"/>
+</iter>
+<var>${file_count}</var>
+<value>@{file_counts}</value>
+<status status="PASS" start="2026-10-14T16:31:11.790517" elapsed="0.083548"/>
+</for>
+<status status="PASS" start="2026-10-14T16:31:03.767821" elapsed="8.106424"/>
+</kw>
+<status status="PASS" start="2026-10-14T16:30:47.879860" elapsed="23.994758"/>
+</test>
+<status status="PASS" start="2026-10-14T16:29:19.643024" elapsed="112.232960"/>
 </suite>
 <statistics>
 <total>
-<stat pass="1" fail="0" skip="0">All Tests</stat>
+<stat pass="8" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat name="Excel Filter" id="s1" pass="1" fail="0" skip="0">Excel Filter</stat>
+<stat name="Excel Filter" id="s1" pass="8" fail="0" skip="0">Excel Filter</stat>
 </suite>
 </statistics>
 <errors>

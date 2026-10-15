@@ -3,6 +3,12 @@ from pathlib import Path
 
 from openpyxl import load_workbook
 
+from src.combine_detail import extract_not_match_by_file_name
+from src.excel_filter import (
+    MASTER_FILE_STEM,
+    display_group_title,
+    get_unique_field_names_with_not_match,
+)
 from src.excel_exporter import export_round
 
 
@@ -36,6 +42,9 @@ class ExcelFilterLibrary:
 
         return input_dir
 
+    def validate_round_input_folder(self, round_name="Round14"):
+        return str(self._get_round_input_dir(round_name))
+
     def process_all_excel_files(self, round_name="Round14"):
         """
         Process Excel files only in input/<Round>.
@@ -51,23 +60,136 @@ class ExcelFilterLibrary:
         self.last_metadata = metadata
         self.last_round = round_name
 
-        print(f"Selected Round: {round_name}")
-        print(f"Input folder: {metadata['input_dir']}")
-        print(f"Output file: {output_file}")
-        print(f"Master count: {metadata['master_count']}")
-        print(f"Detail file count: {len(metadata['detail_files'])}")
-
         return str(output_file)
 
+    def get_last_export_summary(self):
+        if self.last_metadata is None:
+            raise AssertionError(
+                "Run Process All Excel Files before requesting the export summary."
+            )
+
+        detail_counts = [
+            {
+                "name": display_group_title(record["path"]),
+                "count": len(record["values"]),
+            }
+            for record in self.last_metadata["records"]
+            if not record["is_master"]
+        ]
+
+        return {
+            "round_name": self.last_round,
+            "input_dir": self.last_metadata["input_dir"],
+            "output_file": str(self.last_output),
+            "master_name": display_group_title(
+                self.last_metadata["master_file"]
+            ),
+            "master_count": self.last_metadata["master_count"],
+            "detail_file_count": len(
+                self.last_metadata["detail_files"]
+            ),
+            "detail_counts": detail_counts,
+        }
+
+    def get_last_field_name_counts(self):
+        if self.last_metadata is None:
+            raise AssertionError(
+                "Run Process All Excel Files before requesting field name counts."
+            )
+
+        file_counts = []
+        for record in self.last_metadata["records"]:
+            file_path = Path(record["path"])
+            field_names = get_unique_field_names_with_not_match(
+                file_path
+            )
+            file_counts.append(
+                {
+                    "type": "Master" if record["is_master"] else "Detail",
+                    "name": display_group_title(file_path),
+                    "count": len(field_names),
+                }
+            )
+
+        return file_counts
+
     def get_input_file_count(self, round_name="Round14"):
+        return len(self._get_input_excel_files(round_name))
+
+    def get_input_file_names(self, round_name="Round14"):
+        return [
+            path.name
+            for path in self._get_input_excel_files(round_name)
+        ]
+
+    def get_master_detail_extraction_counts(self, round_name="Round14"):
+        excel_files = self._get_input_excel_files(round_name)
+        master_files = [
+            path
+            for path in excel_files
+            if MASTER_FILE_STEM.casefold() in path.stem.casefold()
+        ]
+
+        if not master_files:
+            raise FileNotFoundError(
+                f"Master file containing '{MASTER_FILE_STEM}' "
+                f"was not found for {round_name}."
+            )
+
+        if len(master_files) > 1:
+            raise ValueError(
+                f"Multiple Master files found for {round_name}: "
+                f"{[path.name for path in master_files]}"
+            )
+
+        master_file = master_files[0]
+        detail_files = [
+            path for path in excel_files if path != master_file
+        ]
+
+        if not detail_files:
+            raise FileNotFoundError(
+                f"No Detail Excel files found for {round_name}."
+            )
+
+        file_counts = []
+        for file_path in [master_file, *detail_files]:
+            groups = [
+                {
+                    "file_name": group["file_name"],
+                    "count": len(group["values"]),
+                }
+                for group in extract_not_match_by_file_name(file_path)
+            ]
+            file_counts.append(
+                {
+                    "type": (
+                        "Master" if file_path == master_file else "Detail"
+                    ),
+                    "file_name": (
+                        display_group_title(file_path)
+                        if file_path == master_file
+                        else file_path.name
+                    ),
+                    "count": sum(group["count"] for group in groups),
+                    "groups": groups,
+                }
+            )
+
+        return file_counts
+
+    def _get_input_excel_files(self, round_name):
         input_dir = self._get_round_input_dir(round_name)
 
-        return sum(
-            1
-            for path in input_dir.iterdir()
-            if path.is_file()
-            and path.suffix.lower() in {".xlsx", ".xlsm"}
-            and not path.name.startswith("~$")
+        return sorted(
+            [
+                path
+                for path in input_dir.iterdir()
+                if path.is_file()
+                and path.suffix.lower() in {".xlsx", ".xlsm"}
+                and not path.name.startswith("~$")
+            ],
+            key=lambda path: path.name.casefold(),
         )
 
     def verify_output_files_exist(self, round_name=None):
