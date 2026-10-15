@@ -425,34 +425,15 @@ def build_comparison_sheet(ws, records):
             cell.font = DIFF_FONT
             master_diff_append_row += 1
 
-        append_start_row = len(detail_values) + 2
-
-        for offset, value in enumerate(missing_master_values):
-            row_index = append_start_row + offset
-
-            cell = write_data_cell(
-                ws, row_index, value_column, value
-            )
-            cell.fill = DIFF_FILL
-            cell.font = DIFF_FONT
-
-            write_status_cell(
-                ws, row_index, detail_to_master_column, ""
-            )
-            write_status_cell(
-                ws, row_index, master_to_detail_column, "Diff"
-            )
 
         record["match_detail_to_master"] = match_detail_to_master
         record["diff_detail_to_master"] = diff_detail_to_master
         record["match_master_to_detail"] = match_master_to_detail
         record["diff_master_to_detail"] = diff_master_to_detail
 
-        displayed_value_count = (
-            len(detail_values) + len(missing_master_values)
-        )
         count_row = max(
-            displayed_value_count, len(master_values)
+            len(detail_values),
+            len(master_values),
         ) + 3
 
         write_count(ws, count_row, value_column, len(detail_values))
@@ -595,6 +576,66 @@ def get_unique_file_field_pairs_from_source(file_path):
     return collected
 
 
+def get_unique_field_names_with_not_match(file_path):
+    """Return unique Field Name values whose Result is Not match."""
+    file_path = Path(file_path)
+
+    if not file_path.is_file():
+        raise FileNotFoundError(f"Excel file not found: {file_path}")
+
+    workbook = load_workbook(
+        file_path,
+        read_only=True,
+        data_only=True,
+    )
+
+    def normalize_header(value):
+        value = normalize_value(value).casefold()
+        value = re.sub(r"[_\r\n\t]+", " ", value)
+        return " ".join(value.split())
+
+    field_names = OrderedDict()
+
+    try:
+        for sheet in workbook.worksheets:
+            field_col = None
+            result_col = None
+
+            for row in sheet.iter_rows(values_only=True):
+                headers = {
+                    normalize_header(value): index
+                    for index, value in enumerate(row)
+                    if value is not None
+                }
+
+                if "field name" in headers and "result" in headers:
+                    field_col = headers["field name"]
+                    result_col = headers["result"]
+                    continue
+
+                if field_col is None or result_col is None:
+                    continue
+
+                field_name = normalize_value(
+                    row[field_col] if field_col < len(row) else ""
+                )
+                result = normalize_value(
+                    row[result_col] if result_col < len(row) else ""
+                )
+
+                if not field_name or result.casefold() != "not match":
+                    continue
+
+                field_names.setdefault(
+                    comparison_key(field_name),
+                    field_name,
+                )
+    finally:
+        workbook.close()
+
+    return list(field_names.values())
+
+
 def get_unique_file_names_from_source(file_path):
     """Return unique File names from Column B."""
     file_names = []
@@ -638,19 +679,15 @@ def build_combine_detail_sheet(ws, records):
     """
     Build Combine detail sheet.
 
-    Compare only Not match values extracted by
-    extract_not_match_by_file_name().
-
     Master:
         - Shows File Name and Not match value only.
 
     Detail:
-        - Shows Detail values first.
+        - Shows original Detail values only.
         - Detail values not found in Master -> Not found (gray).
-        - Master values missing from Detail -> appended at bottom,
-          with File Name and Not match value in red, status Diff.
-        - Count includes original extracted values only,
-          excluding appended/stamped rows.
+        - Does NOT append missing Master values.
+        - Does NOT stamp missing Master File Name / Field Name.
+        - Match/Diff counts are calculated from original data only.
     """
 
     # --------------------------------------------------------
@@ -727,17 +764,6 @@ def build_combine_detail_sheet(ws, records):
         cell.alignment = CENTER
         return cell
 
-    def write_stamped_cell(row, column, value):
-        cell = write_data_cell(
-            ws,
-            row,
-            column,
-            value,
-        )
-        cell.fill = DIFF_FILL
-        cell.font = DIFF_FONT
-        return cell
-
     # --------------------------------------------------------
     # RESET ONLY THIS SHEET
     # --------------------------------------------------------
@@ -812,8 +838,6 @@ def build_combine_detail_sheet(ws, records):
         )
 
         detail_data = grouped_data.get(path_key, {})
-
-        # Short group title, e.g. 14_470_99H
         group_title = display_group_title(file_path)
 
         # Master has 2 columns; Detail has 4 columns
@@ -849,8 +873,6 @@ def build_combine_detail_sheet(ws, records):
             )
 
         output_row = 3
-
-        # Count of original extracted values only
         original_count = 0
 
         detail_match = 0
@@ -889,53 +911,43 @@ def build_combine_detail_sheet(ws, records):
             # Preserve Detail File Name order first.
             all_file_names = list(detail_data.keys())
 
-            # Add Master File Names that are absent from Detail.
+            # Include Master File Names for comparison,
+            # but do NOT create rows for missing Master values.
             for file_name in master_data:
                 if file_name not in all_file_names:
                     all_file_names.append(file_name)
-
-            # Track original Detail values, for comparison only.
-            detail_maps = {}
 
             for file_name in all_file_names:
                 detail_values = detail_data.get(file_name, [])
                 master_values = master_data.get(file_name, [])
 
-                detail_map = {
-                    comparison_key(value): value
+                detail_keys = {
+                    comparison_key(value)
                     for value in detail_values
                 }
-
-                master_map = {
-                    comparison_key(value): value
+                master_keys = {
+                    comparison_key(value)
                     for value in master_values
                 }
 
-                detail_maps[file_name] = detail_map
+                # --------------------------------------------
+                # 1. Write original Detail rows only
+                # --------------------------------------------
 
-                # --------------------------------------------
-                # 1. Original Detail rows
-                # --------------------------------------------
                 for value in detail_values:
                     key = comparison_key(value)
-                    exists_in_master = key in master_map
-
-                    # Detail -> Master
-                    status_detail_to_master = (
-                        "Match" if exists_in_master else "Diff"
-                    )
-
-                    # Master -> Detail:
-                    # Detail-only values are marked Not found.
-                    status_master_to_detail = (
-                        "Match" if exists_in_master else "Not found"
-                    )
+                    exists_in_master = key in master_keys
 
                     if exists_in_master:
+                        status_detail_to_master = "Match"
+                        status_master_to_detail = "Match"
                         detail_match += 1
                     else:
+                        status_detail_to_master = "Diff"
+                        status_master_to_detail = "Not found"
                         detail_diff += 1
                         master_not_found += 1
+
 
                     write_data_cell(
                         ws,
@@ -974,58 +986,22 @@ def build_combine_detail_sheet(ws, records):
                     original_count += 1
 
                 # --------------------------------------------
-                # 2. Calculate Master -> Detail matches
+                # 2. Calculate Master -> Detail counts only
+                #    Do NOT append missing Master values.
                 # --------------------------------------------
                 for value in master_values:
                     key = comparison_key(value)
 
-                    if key in detail_map:
+                    if key in detail_keys:
                         master_match += 1
-
-            # ------------------------------------------------
-            # 3. Append missing Master values at the bottom
-            #    of ALL original Detail data in this group.
-            # ------------------------------------------------
-            for file_name, master_values in master_data.items():
-                detail_map = detail_maps.get(file_name, {})
-
-                for value in master_values:
-                    key = comparison_key(value)
-
-                    if key in detail_map:
-                        continue
-
-                    # Both File Name and Not match value are red.
-                    write_stamped_cell(
-                        output_row,
-                        current_column,
-                        file_name,
-                    )
-                    write_stamped_cell(
-                        output_row,
-                        current_column + 1,
-                        value,
-                    )
-
-                    write_status_cell(
-                        ws,
-                        output_row,
-                        current_column + 2,
-                        "",
-                    )
-                    write_status_cell(
-                        ws,
-                        output_row,
-                        current_column + 3,
-                        "Diff",
-                    )
-
-                    master_diff += 1
-                    output_row += 1
+                    else:
+                        master_diff += 1
 
         # ----------------------------------------------------
         # COUNTS
-        # Count excludes appended/stamped Master values.
+        # Only original extracted rows are displayed/countable.
+        # Master -> Detail Diff is calculated without stamping
+        # missing Master values into the Detail group.
         # ----------------------------------------------------
         count_row = output_row + 1
 
@@ -1056,7 +1032,7 @@ def build_combine_detail_sheet(ws, records):
                 (
                     current_column + 3,
                     f"Match: {master_match} | "
-                    f"Diff: {master_diff} | "
+                    # f"Diff: {master_diff} | "
                     f"Not found: {master_not_found}",
                 ),
             )
@@ -1069,7 +1045,6 @@ def build_combine_detail_sheet(ws, records):
                 )
                 cell.font = BOLD_FONT
                 cell.border = CELL_BORDER
-                cell.alignment = CENTER
                 cell.alignment = Alignment(
                     horizontal="center",
                     vertical="center",
@@ -1101,6 +1076,7 @@ def build_combine_detail_sheet(ws, records):
     ws.sheet_view.showGridLines = False
     ws.row_dimensions[1].height = 24
     ws.row_dimensions[2].height = 36
+
 
 # ============================================================
 # MAIN WORKBOOK CREATION
