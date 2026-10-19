@@ -1,0 +1,18 @@
+### Dowloan and install ###
+1. Visual studio code 
+2. python
+3. Set up pip 
+python -m pip install --upgrade pip
+4. Install robotframework , openpyxl , panas , numpy 
+py -m pip install robotframework==7.5 openpyxl==3.1.5 pandas==3.0.5 numpy==2.5.1
+
+### Check version ###
+
+1. Check python version
+py --version
+2. Check pip version 
+py -m pip --version
+3. Robot Framework Version
+py -m robot --version
+4. Library Versions
+py -m pip show openpyxl pandas numpy
